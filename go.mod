@@ -1,4 +1,4 @@
-module ml-url-shortener
+module github.com/n0o01lh/ml-url-shortener
 
 go 1.23.0
 

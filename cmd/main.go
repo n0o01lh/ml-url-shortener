@@ -1,6 +1,6 @@
 package main
 
-import "ml-url-shortener/internals/server"
+import "github.com/n0o01lh/ml-url-shortener/internals/server"
 
 func main() {
 
