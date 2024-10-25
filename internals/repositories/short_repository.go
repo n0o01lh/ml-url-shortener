@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"fmt"
+
 	"github.com/n0o01lh/ml-url-shortener/internals/core/domain"
 	"github.com/n0o01lh/ml-url-shortener/internals/core/ports"
 )
@@ -15,6 +17,7 @@ func NewShortRepository() *ShortRepository {
 var _ ports.ShortRepository = (*ShortRepository)(nil)
 
 func (r *ShortRepository) Create(shortedUrl *domain.ShortedUrl) (*domain.ShortedUrl, error) {
+	fmt.Println(shortedUrl)
 	return nil, nil
 }
 
