@@ -7,7 +7,7 @@ import (
 
 type ShortService interface {
 	Create(shortRequest *domain.ShortRequest) (*domain.ShortedUrl, error)
-	Update(id string) (*domain.ShortedUrl, error)
+	Update(id string, shortRequest *domain.ShortRequest) (*domain.ShortedUrl, error)
 }
 
 type ShortRepository interface {
@@ -15,7 +15,7 @@ type ShortRepository interface {
 	Update(id string, shortedUrl *domain.ShortedUrl) (*domain.ShortedUrl, error)
 }
 
-type ShortHandler interface {
+type ShortHandlers interface {
 	Create(context *fiber.Ctx) error
 	Update(context *fiber.Ctx) error
 }
