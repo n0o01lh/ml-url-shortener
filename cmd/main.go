@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/gofiber/fiber/v2/log"
 	clients "github.com/n0o01lh/ml-url-shortener/internals/clients"
 	"github.com/n0o01lh/ml-url-shortener/internals/core/services"
 	"github.com/n0o01lh/ml-url-shortener/internals/data"
@@ -15,6 +16,9 @@ func main() {
 
 	awsAccessKey := os.Getenv("AWS_ACCESS_KEY")
 	awsSecretAccessKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
+
+	log.Info("access key " + awsAccessKey)
+	log.Info("secret key " + awsSecretAccessKey)
 
 	dynamoDbClient, error := clients.NewDynamoDbClient(awsAccessKey, awsSecretAccessKey)
 
