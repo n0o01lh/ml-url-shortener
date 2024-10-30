@@ -64,6 +64,12 @@ El siguiente diagrama muestra la arquitectura diseñada para el proceso de integ
 
 ![Components Diagram](./assets/ci_cd_diagram.png)
 
+## Pruebas
+
+Se realizaron pruebas de carga con K6 utilizando 100vus para generar accesos a un link acortado (resolver handler) en un espacio de 1 minuto, obteniendo como resultado 5532 requests exitosos:
+
+![Components Diagram](./assets/k6.png)
+
 ## Contacto
 
 Linkedin - https://www.linkedin.com/in/nionate
