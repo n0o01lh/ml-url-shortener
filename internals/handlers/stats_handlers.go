@@ -6,13 +6,14 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/n0o01lh/ml-url-shortener/internals/core/ports"
+	"github.com/n0o01lh/ml-url-shortener/internals/core/services"
 )
 
 type StatsHandlers struct {
-	service ports.ServiceOrchestrator
+	service *services.ServiceOrchestrator
 }
 
-func NewStatsHandlers(service ports.ServiceOrchestrator) *StatsHandlers {
+func NewStatsHandlers(service *services.ServiceOrchestrator) *StatsHandlers {
 	return &StatsHandlers{service: service}
 }
 

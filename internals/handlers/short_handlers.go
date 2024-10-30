@@ -8,13 +8,14 @@ import (
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/n0o01lh/ml-url-shortener/internals/core/domain"
 	"github.com/n0o01lh/ml-url-shortener/internals/core/ports"
+	"github.com/n0o01lh/ml-url-shortener/internals/core/services"
 )
 
 type ShortHandlers struct {
-	service ports.ServiceOrchestrator
+	service *services.ServiceOrchestrator
 }
 
-func NewShortHandlers(service ports.ServiceOrchestrator) *ShortHandlers {
+func NewShortHandlers(service *services.ServiceOrchestrator) *ShortHandlers {
 	return &ShortHandlers{service: service}
 }
 

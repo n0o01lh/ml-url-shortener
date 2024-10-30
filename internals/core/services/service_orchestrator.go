@@ -4,23 +4,24 @@ import (
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/n0o01lh/ml-url-shortener/internals/core/domain"
 	"github.com/n0o01lh/ml-url-shortener/internals/core/ports"
+	"github.com/n0o01lh/ml-url-shortener/internals/workers"
 )
 
 type ServiceOrchestrator struct {
 	shortService    ports.ShortService
 	resolverService ports.ResolverService
 	statsService    ports.StatsService
+	jobQueue        workers.JobQueue
 }
 
-func NewServiceOrchestrator(shortService ports.ShortService, resolveService ports.ResolverService, statsService ports.StatsService) *ServiceOrchestrator {
+func NewServiceOrchestrator(shortService ports.ShortService, resolveService ports.ResolverService, statsService ports.StatsService, jobQueue workers.JobQueue) *ServiceOrchestrator {
 	return &ServiceOrchestrator{
 		shortService:    shortService,
 		resolverService: resolveService,
 		statsService:    statsService,
+		jobQueue:        jobQueue,
 	}
 }
-
-var _ ports.ServiceOrchestrator = (*ServiceOrchestrator)(nil)
 
 func (c *ServiceOrchestrator) CreateShortUrl(request *domain.ShortRequest) (*domain.ShortedUrl, error) {
 
@@ -52,20 +53,21 @@ func (c *ServiceOrchestrator) UpdateShortUrl(id string, request *domain.ShortReq
 	return shortedUrlUpdated, nil
 }
 
-func (c *ServiceOrchestrator) GetShortUrl(id string) (*domain.ShortedUrl, error) {
+func (c *ServiceOrchestrator) GetShortUrl(id string) {
 
-	shortedUrlUpdated, err := c.resolverService.Get(id)
+	c.jobQueue.Wg.Add(1)
+	c.jobQueue.JobChannel <- workers.NewJob(id, c.resolverService, c.statsService)
+}
+
+func (c *ServiceOrchestrator) UpdateStats(id string) error {
+	err := c.statsService.Update(id)
 
 	if err != nil {
 		log.Error(err)
-		return nil, err
+		return err
 	}
 
-	if err = c.statsService.Update(shortedUrlUpdated.Id); err != nil {
-		log.Error(err)
-	}
-
-	return shortedUrlUpdated, nil
+	return nil
 }
 
 func (c *ServiceOrchestrator) GetStats(id string) (*domain.Stats, error) {
@@ -78,4 +80,8 @@ func (c *ServiceOrchestrator) GetStats(id string) (*domain.Stats, error) {
 	}
 
 	return stats, nil
+}
+
+func (c *ServiceOrchestrator) GetJobQueue() workers.JobQueue {
+	return c.jobQueue
 }
