@@ -35,5 +35,5 @@ func (s *Server) Initialize() {
 
 	resolveRoutes.Get("/:id", s.resolveHandlers.Get)
 
-	app.Listen(":3000")
+	app.Listen(":5000")
 }
