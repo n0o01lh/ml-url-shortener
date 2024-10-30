@@ -9,6 +9,15 @@
 
 > go 1.18 or higher
 
+## API
+
+| Endpoint                 | Payload                                                                         | Response                                                                                                                                                               |
+| ------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| POST: /short/create      | { "url": original-url, "available": <true \| false> (default true) }            | { "id": <shorted-url-id>, "original-url": <original-url>, "available": <true \| false>, "created_at": <date-of-short-url-creation>, "updated_at": <last-update-date> } |
+| PATCH: /short/update/:id | { "url": new-original-url (optional), "available": <true \| false> (optional) } | { "id": <shorted-url-id>, "original-url": <original-url>, "available": <true \| false>, "created_at": <date-of-short-url-creation> "updated_at": <last-update-date> }  |
+| GET: /:id                | -                                                                               | Redirects to original url                                                                                                                                              |
+| GET: /stats/:id          | -                                                                               | { "id": <shorted-url-id>, "clicks": number-of-clicks }                                                                                                                 |
+
 ## Solución
 
 Para el desarrollo del proyecto se plantearon distintas alternativas de lenguajes, frameworks, bases de datos y uso de servicios cloud, a continuación se detallan las tecnologías escogidas:
